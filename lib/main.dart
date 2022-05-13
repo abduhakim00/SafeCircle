@@ -24,18 +24,19 @@ class CovidApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Covid 19 Tracking App',
           theme: ThemeData(
-            primarySwatch: Colors.red,
-            backgroundColor: Colors.red,
-            accentColor: Colors.blue,
-            accentColorBrightness: Brightness.dark,
-            buttonTheme: ButtonTheme.of(context).copyWith(
-              buttonColor: Colors.red,
-              textTheme: ButtonTextTheme.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+              primarySwatch: Colors.red,
+              backgroundColor: Colors.red.shade800,
+              accentColor: Colors.blue,
+              accentColorBrightness: Brightness.dark,
+              buttonTheme: ButtonTheme.of(context).copyWith(
+                buttonColor: Colors.red,
+                textTheme: ButtonTextTheme.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
-            ),
-          ),
+              textTheme:
+                  const TextTheme(headline6: TextStyle(fontFamily: "Squid"))),
           home: appSnapshot.connectionState == ConnectionState.waiting
               ? Center(
                   child: CircularProgressIndicator(),
