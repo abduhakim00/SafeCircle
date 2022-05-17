@@ -44,6 +44,9 @@ class _AuthScreenState extends State<AuthScreen> {
             .set({
           'username': username,
           'email': email,
+          'BMI': 0,
+          'Diabetes': 0,
+          'Covid': 1
         });
       }
     } on FirebaseAuthException catch (err) {

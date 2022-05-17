@@ -2,8 +2,10 @@
 
 import 'package:covid_app/screens/nearby_devices_screen.dart';
 import 'package:covid_app/screens/report_screen.dart';
+import 'package:covid_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import "package:covid_app/providers/user_info.dart";
+import "package:provider/provider.dart";
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +22,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() async {
+    Provider.of<UserData>(context, listen: false).updateUserInfo();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,11 +36,16 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+                Navigator.pushNamed(context, '/profile');
               },
               icon: const Icon(Icons.account_circle_outlined))
         ],
       ),
+      drawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: DrawerWidget()),
       body: pages[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColorDark,

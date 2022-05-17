@@ -2,9 +2,12 @@
 
 import 'package:covid_app/screens/auth_screen.dart';
 import 'package:covid_app/screens/home.dart';
+import 'package:covid_app/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import './providers/user_info.dart';
 
 void main() {
   runApp(CovidApp());
@@ -20,35 +23,39 @@ class CovidApp extends StatelessWidget {
       // Initialize FlutterFire:
       future: _initialization,
       builder: (context, appSnapshot) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Covid 19 Tracking App',
-          theme: ThemeData(
-              primarySwatch: Colors.red,
-              backgroundColor: Colors.red.shade800,
-              accentColor: Colors.blue,
-              accentColorBrightness: Brightness.dark,
-              buttonTheme: ButtonTheme.of(context).copyWith(
-                buttonColor: Colors.red,
-                textTheme: ButtonTextTheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+        return ChangeNotifierProvider(
+          create: (context) => UserData(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Covid 19 Tracking App',
+            theme: ThemeData(
+                primarySwatch: Colors.teal,
+                backgroundColor: Colors.teal.shade800,
+                accentColor: Colors.green,
+                accentColorBrightness: Brightness.dark,
+                buttonTheme: ButtonTheme.of(context).copyWith(
+                  buttonColor: Colors.red,
+                  textTheme: ButtonTextTheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
-              ),
-              textTheme:
-                  const TextTheme(headline6: TextStyle(fontFamily: "Squid"))),
-          home: appSnapshot.connectionState == ConnectionState.waiting
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : StreamBuilder(
-                  stream: FirebaseAuth.instance.onAuthStateChanged,
-                  builder: (ctx, userSnapshot) {
-                    if (userSnapshot.hasData) {
-                      return HomePage();
-                    }
-                    return AuthScreen();
-                  }),
+                textTheme:
+                    const TextTheme(headline6: TextStyle(fontFamily: "Squid"))),
+            home: appSnapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : StreamBuilder(
+                    stream: FirebaseAuth.instance.onAuthStateChanged,
+                    builder: (ctx, userSnapshot) {
+                      if (userSnapshot.hasData) {
+                        return HomePage();
+                      }
+                      return AuthScreen();
+                    }),
+            routes: {'/profile': (context) => UserProfile()},
+          ),
         );
       },
     );

@@ -86,7 +86,7 @@ class _AuthFormState extends State<AuthForm> {
                 child: Text(
                   'SafeCircle',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorDark,
+                    color: Colors.red,
                     fontSize: 35,
                     fontFamily: 'Squid',
                     fontWeight: FontWeight.normal,
@@ -171,7 +171,7 @@ class _AuthFormState extends State<AuthForm> {
                         if (widget.isLoading) CircularProgressIndicator(),
                         if (!widget.isLoading)
                           RaisedButton(
-                            color: Theme.of(context).primaryColorDark,
+                            color: Colors.red,
                             child: Text(
                               _isLogin ? 'Login' : 'Signup',
                               style: TextStyle(fontFamily: "Squid"),
@@ -180,7 +180,7 @@ class _AuthFormState extends State<AuthForm> {
                           ),
                         if (!widget.isLoading)
                           FlatButton(
-                            textColor: Theme.of(context).primaryColorDark,
+                            textColor: Colors.red,
                             child: Text(_isLogin
                                 ? 'Create new account'
                                 : 'I already have an account'),
