@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() async {
-    Provider.of<UserData>(context, listen: false).updateUserInfo();
+    Provider.of<UserData>(context, listen: false).getUserInfo();
     super.didChangeDependencies();
   }
 

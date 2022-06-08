@@ -4,9 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:covid_app/providers/user_info.dart';
+import 'package:covid_app/screens/bmi/input_page.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
+  @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
   Widget _builder(ctx, field, prop, [change]) {
+    var prop1 = 1;
+    if (prop == 'Null, Measure it!') prop1 = 0;
     return SizedBox(
       height: MediaQuery.of(ctx).size.height * 0.09,
       child: ListTile(
@@ -21,6 +29,25 @@ class UserProfile extends StatelessWidget {
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.normal),
         ),
+        subtitle: change != null && prop1 != 0
+            ? change == 1
+                ? double.parse(prop) < 18.5
+                    ? const Text('Under-Weight')
+                    : double.parse(prop) <= 25
+                        ? const Text('Normal')
+                        : const Text("Over-Weight")
+                : prop < 6
+                    ? const Text('Low')
+                    : prop < 9
+                        ? const Text('Low To Moderate')
+                        : prop < 12
+                            ? const Text('Moderate')
+                            : prop < 16
+                                ? const Text('Moderate to High')
+                                : prop < 20
+                                    ? const Text('High')
+                                    : const Text('Very High')
+            : null,
         title: Text(
           prop.toString(),
           style: const TextStyle(
@@ -28,15 +55,31 @@ class UserProfile extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.normal),
         ),
-        trailing:
-            change != null ? const InkWell(child: Icon(Icons.edit)) : null,
+        trailing: change != null
+            ? Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: InkWell(
+                  child: const Icon(Icons.edit),
+                  onTap: () {
+                    change == 1
+                        ? Navigator.push(
+                            ctx,
+                            MaterialPageRoute(
+                                builder: (context) => InputPage()),
+                          )
+                        : Navigator.of(context).pushNamed('/diabetes');
+                  },
+                ),
+              )
+            : null,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final info = Provider.of<UserData>(context, listen: false).getData();
+    var x = Provider.of<UserData>(context, listen: true);
+    var info = x.getData();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -50,13 +93,13 @@ class UserProfile extends StatelessWidget {
             alignment: Alignment.center,
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.2,
-            child: Text(
+            child: const Text(
               "You are healthy!",
               style: TextStyle(
                   fontFamily: 'Gothic',
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
-                  color: Theme.of(context).accentColor),
+                  color: Colors.green),
             ),
           ),
           Column(
@@ -83,7 +126,7 @@ class UserProfile extends StatelessWidget {
                   info.data()['Diabetes'] == 0
                       ? "Null, Measure it!"
                       : info.data()['Diabetes'],
-                  1),
+                  2),
             ],
           ),
           Container(

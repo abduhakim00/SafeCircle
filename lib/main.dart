@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use
 
+import 'package:covid_app/diabetes/main.dart';
 import 'package:covid_app/screens/auth_screen.dart';
 import 'package:covid_app/screens/home.dart';
 import 'package:covid_app/screens/profile_screen.dart';
@@ -31,7 +32,7 @@ class CovidApp extends StatelessWidget {
             theme: ThemeData(
                 primarySwatch: Colors.teal,
                 backgroundColor: Colors.teal.shade800,
-                accentColor: Colors.green,
+                accentColor: Colors.red,
                 accentColorBrightness: Brightness.dark,
                 buttonTheme: ButtonTheme.of(context).copyWith(
                   buttonColor: Colors.red,
@@ -54,7 +55,10 @@ class CovidApp extends StatelessWidget {
                       }
                       return AuthScreen();
                     }),
-            routes: {'/profile': (context) => UserProfile()},
+            routes: {
+              '/profile': (context) => UserProfile(),
+              '/diabetes': (context) => DiabetesRisk()
+            },
           ),
         );
       },

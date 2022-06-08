@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../screens/bmi/input_page.dart';
 import 'package:provider/provider.dart';
 import 'package:covid_app/providers/user_info.dart';
 
@@ -65,10 +66,10 @@ class DrawerWidget extends StatelessWidget {
           leading: const Icon(Icons.edit_note_outlined),
           title: const Text('Measure BMI'),
           onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            // Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => InputPage()),
+            );
           },
         ),
         const Divider(),
@@ -80,10 +81,7 @@ class DrawerWidget extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           onTap: () {
-            // Update the state of the app
-            // ...
-            // Then close the drawer
-            // Navigator.pop(context);
+            Navigator.of(context).pushNamed('/diabetes');
           },
         ),
         const SizedBox(
