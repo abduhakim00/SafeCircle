@@ -21,5 +21,6 @@ const ktitleTextStyle = TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold);
 const kresultTextStyle = TextStyle(
     color: Color(0xFF24D876), fontSize: 22.0, fontWeight: FontWeight.bold);
 //const kLargeButtonTextStyle=TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold);
-const kBMITextStyle = TextStyle(fontSize: 100.0, fontWeight: FontWeight.bold);
-const kbodyTextStyle = TextStyle(fontSize: 22.0);
+const kBMITextStyle =
+    TextStyle(color: Colors.grey, fontSize: 100.0, fontWeight: FontWeight.bold);
+const kbodyTextStyle = TextStyle(color: Colors.grey, fontSize: 22.0);

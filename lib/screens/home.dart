@@ -6,6 +6,8 @@ import 'package:covid_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import "package:covid_app/providers/user_info.dart";
 import "package:provider/provider.dart";
+import 'package:nearby_connections/nearby_connections.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,6 +23,28 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void android12Perm() async {
+    if (!await Nearby().checkBluetoothPermission()) {
+      Nearby().askBluetoothPermission();
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message);
+      return;
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print(message);
+      return;
+    });
+  }
+
   @override
   void didChangeDependencies() async {
     Provider.of<UserData>(context, listen: false).getUserInfo();
@@ -29,6 +53,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    android12Perm();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,

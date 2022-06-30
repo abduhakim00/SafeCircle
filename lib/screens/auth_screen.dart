@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -46,7 +47,8 @@ class _AuthScreenState extends State<AuthScreen> {
           'email': email,
           'BMI': 0,
           'Diabetes': 0,
-          'Covid': 1
+          'Covid': 1,
+          'token': await FirebaseMessaging.instance.getToken()
         });
       }
     } on FirebaseAuthException catch (err) {

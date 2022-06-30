@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import './providers/user_info.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() {
   runApp(CovidApp());
@@ -24,6 +25,7 @@ class CovidApp extends StatelessWidget {
       // Initialize FlutterFire:
       future: _initialization,
       builder: (context, appSnapshot) {
+        FirebaseMessaging.instance.getToken();
         return ChangeNotifierProvider(
           create: (context) => UserData(),
           child: MaterialApp(
@@ -48,7 +50,7 @@ class CovidApp extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 : StreamBuilder(
-                    stream: FirebaseAuth.instance.onAuthStateChanged,
+                    stream: FirebaseAuth.instance.authStateChanges(),
                     builder: (ctx, userSnapshot) {
                       if (userSnapshot.hasData) {
                         return HomePage();

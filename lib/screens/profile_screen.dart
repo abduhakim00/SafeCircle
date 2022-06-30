@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -76,10 +77,30 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
+  Widget titleStatus(int x) {
+    return Text(
+      x == 1
+          ? "You are healthy!"
+          : x == 0
+              ? "Self-Isolate!"
+              : "Take A PCR Test!",
+      style: TextStyle(
+          fontFamily: 'Gothic',
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
+          color: x == 1
+              ? Colors.green
+              : x == 0
+                  ? Colors.red
+                  : Colors.orange),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var x = Provider.of<UserData>(context, listen: true);
-    var info = x.getData();
+    DocumentSnapshot<Map<String, dynamic>> info = x.getData();
+    final status = info.data()["Covid"];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -90,18 +111,10 @@ class _UserProfileState extends State<UserProfile> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: const Text(
-              "You are healthy!",
-              style: TextStyle(
-                  fontFamily: 'Gothic',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.green),
-            ),
-          ),
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: titleStatus(status)),
           Column(
             children: [
               _builder(context, "Username:", info.data()['username']),
@@ -109,8 +122,14 @@ class _UserProfileState extends State<UserProfile> {
               _builder(
                   context, "Email:", FirebaseAuth.instance.currentUser.email),
               const Divider(),
-              _builder(context, "Covid Status:",
-                  info.data()["Covid"] == 1 ? 'Healthy' : 'Sick'),
+              _builder(
+                  context,
+                  "Covid Status:",
+                  status == 1
+                      ? 'Healthy'
+                      : status == 0
+                          ? 'Infected'
+                          : 'Waiting'),
               const Divider(),
               _builder(
                   context,

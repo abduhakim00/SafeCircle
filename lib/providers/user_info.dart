@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 
 class UserData with ChangeNotifier {
-  DocumentSnapshot userInfo;
+  DocumentSnapshot<Map<String, dynamic>> userInfo;
 
   UserData() {}
 

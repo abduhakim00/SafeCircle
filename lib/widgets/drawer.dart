@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/bmi/input_page.dart';
 import 'package:provider/provider.dart';
 import 'package:covid_app/providers/user_info.dart';
+import 'package:nearby_connections/nearby_connections.dart';
 
 class DrawerWidget extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -94,6 +95,8 @@ class DrawerWidget extends StatelessWidget {
             icon: const Icon(Icons.logout_outlined),
             label: const Text('Logout'),
             onPressed: () {
+              // Nearby().stopAdvertising();
+              // Nearby().stopDiscovery();
               FirebaseAuth.instance.signOut();
             },
           ),
