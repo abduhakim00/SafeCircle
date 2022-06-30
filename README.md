@@ -1,6 +1,6 @@
 # covid_app
 
-A new Flutter project.
+Covid 19 Tracking Flutter App, that uses Bluetooth and BLE to save nearby devices to Firebase Cloud Firestore, with PCR submission and Push Notifications
 
 ## Getting Started
 
